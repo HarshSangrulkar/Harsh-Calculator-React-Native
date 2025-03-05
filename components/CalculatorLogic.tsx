@@ -63,8 +63,15 @@ const CalculatorLogic = () => {
           !bracketCount(input)
         )
           return;
-        const result = eval(input);
-        setInput(String(result)); //result appended to setInput
+        //const result = eval(input);
+        //setInput(String(result)); //result appended to setInput
+
+        try {
+          const result = eval(input);
+          setInput(String(result));
+        } catch (error) {
+          setInput("Error");
+        }
 
         break;
 
@@ -89,9 +96,9 @@ const CalculatorLogic = () => {
         setInput(input + value);
         break;
       case ")":
-        
 
-      let openCount = 0;
+
+        let openCount = 0;
         let closeCount = 0;
 
         for (let i = 0; i < input.length; i++) {
