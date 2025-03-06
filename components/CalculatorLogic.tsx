@@ -44,15 +44,18 @@ const CalculatorLogic = () => {
   };
 
   const [input, setInput] = useState("");
+  const [result, setResult] = useState("");
 
   const handlePress = (value: string) => {
     switch (value) {
       case "c": // Clear Input
         setInput("");
+        setResult("");
         break;
 
       case "b": // Backspace
         setInput(input.slice(0, -1));
+
         break;
 
       case "=":
@@ -67,10 +70,14 @@ const CalculatorLogic = () => {
         //setInput(String(result)); //result appended to setInput
 
         try {
-          const result = eval(input);
-          setInput(String(result));
+          const evalResult = eval(input);
+          //setInput("");
+          evalResult.trunc
+          //setResult(String(evalResult));
+          setResult(String(parseFloat(evalResult.toFixed(4))));
         } catch (error) {
-          setInput("Error");
+          setInput("");
+          setResult("Error");
         }
 
         break;
@@ -113,13 +120,16 @@ const CalculatorLogic = () => {
         break;
       default: // Number
         setInput(input + value);
+
         break;
     }
+
   };
+
 
   return (
     <View style={styles.container}>
-      <Display input={input} />
+      <Display input={input} result={result} />
       <Buttons onPress={handlePress} />
     </View>
   );
@@ -128,10 +138,11 @@ const CalculatorLogic = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
-    backgroundColor: "gray",
+    backgroundColor: "lightgray",
   },
+
 });
 
 export default CalculatorLogic;
